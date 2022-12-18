@@ -28,6 +28,7 @@ namespace ConsoleApp1
             } else
             {
                 first = new StackItem(st);
+                size = 1;
             }
             
         }
