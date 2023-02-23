@@ -1,19 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+/*
 namespace ConsoleApp1
 {
-    class Stack
+    class MyStack
     {
         StackItem first;
-        int size = 0;
-        public Stack(string elem)
+        int size = 1;
+        public int Size
+        {
+            set
+            { size = value; }
+            get { return size; }
+        }
+        public MyStack()
+        {
+            first = null;
+            size = 0;
+        }
+        public MyStack(string elem)
         {
             first = new StackItem(elem);
             size = 1;
         }
-        
         public void append(string st)
         {
             if (size > 0)
@@ -24,7 +34,7 @@ namespace ConsoleApp1
                     cur = cur.next;
                 }
                 cur.next = new StackItem(st);
-                size += 1;
+                size = size + 1;
             } else
             {
                 first = new StackItem(st);
@@ -39,11 +49,11 @@ namespace ConsoleApp1
             {
                 if (size == 0)
                     return null;
-                size -= 1;
+                size = size - 1;
                 first = null;
                 return cur;
             } 
-            size -= 1;
+            size = size - 1;
             while(cur.next.next != null)
             {
                 cur = cur.next;
@@ -54,3 +64,4 @@ namespace ConsoleApp1
         }
     }
 }
+*/

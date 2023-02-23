@@ -6,46 +6,98 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            int n = Convert.ToInt32(Console.ReadLine());
-            string[] st = Console.ReadLine().Split();
-            int mn = 0, mx = 0, ind_mn = -1, ind_mx = -1;
-            for (int i = 0; i < st.Length; i++)
+            string st = Console.ReadLine();
+            MyStack stck = new MyStack();
+            bool flag = true;
+            foreach (var elem in st)
             {
-                if (ind_mn == -1)
+                if (elem == '(')
+                    stck.append(Convert.ToString(elem));
+                else
                 {
-                    ind_mn = 0;
-                    ind_mx = 0;
-                    mn = Convert.ToInt32(Convert.ToString(st[i]));
-                    mx = Convert.ToInt32(Convert.ToString(st[i]));
-                } else
-                {
-                    int elem = Convert.ToInt32(Convert.ToString(st[i]));
-                    if (elem < mn)
+                    if (stck.Size == 0)
                     {
-                        mn = elem;
-                        ind_mn = i;
-                    }
-                    if (elem > mx)
-                    {
-                        mx = elem;
-                        ind_mx = i;
-                    }
+                        flag = false;
+                        break;
+                    } else
+                        stck.pop();
                 }
             }
-            for (int i = 0; i < st.Length; i += 1)
+            if (stck.Size == 0 && flag)
+                Console.WriteLine("YES");
+            else
+                Console.WriteLine("NO");
+        }
+    }
+    class MyStack
+    {
+        StackItem first;
+        int size = 1;
+        public int Size
+        {
+            set
+            { size = value; }
+            get { return size; }
+        }
+        public MyStack()
+        {
+            first = null;
+            size = 0;
+        }
+        public MyStack(string elem)
+        {
+            first = new StackItem(elem);
+            size = 1;
+        }
+        public void append(string st)
+        {
+            if (size > 0)
             {
-                if (i == ind_mn && i != ind_mx)
+                StackItem cur = first;
+                while (cur.next != null)
                 {
-                    Console.Write($"{mx} ");
+                    cur = cur.next;
                 }
-                if (i == ind_mx && i != ind_mn)
-                {
-                    Console.Write($"{mn} ");
-                }
-                if (i != ind_mn && i != ind_mx){
-                    Console.Write($"{st[i]} ");
-                }
+                cur.next = new StackItem(st);
+                size = size + 1;
             }
+            else
+            {
+                first = new StackItem(st);
+                size = 1;
+            }
+
+        }
+        public StackItem pop()
+        {
+            StackItem cur = first;
+            if (size == 1 || size == 0)
+            {
+                if (size == 0)
+                    return null;
+                size = size - 1;
+                first = null;
+                return cur;
+            }
+            size = size - 1;
+            while (cur.next.next != null)
+            {
+                cur = cur.next;
+            }
+            StackItem ans = cur.next;
+            cur.next = null;
+            return ans;
+        }
+    }
+
+    class StackItem
+    {
+        public string value;
+        public StackItem next = null;
+
+        public StackItem(string st)
+        {
+            value = st;
         }
     }
 }
