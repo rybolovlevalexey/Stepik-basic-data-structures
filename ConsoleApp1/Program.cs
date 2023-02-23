@@ -6,27 +6,23 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            int cnt = 0, n = 0;
             string st = Console.ReadLine();
             MyStack stck = new MyStack();
-            bool flag = true;
             foreach (var elem in st)
             {
                 if (elem == '(')
-                    stck.append(Convert.ToString(elem));
+                    n += 1;
                 else
                 {
-                    if (stck.Size == 0)
-                    {
-                        flag = false;
-                        break;
-                    } else
-                        stck.pop();
+                    if (n == 0)
+                        cnt += 1;
+                    else
+                        n -= 1;
                 }
             }
-            if (stck.Size == 0 && flag)
-                Console.WriteLine("YES");
-            else
-                Console.WriteLine("NO");
+            cnt += n;
+            Console.WriteLine(cnt);
         }
     }
     class MyStack
