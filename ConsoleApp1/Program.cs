@@ -6,23 +6,53 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            int cnt = 0, n = 0;
+            int cnt1 = 0; // ()
+            int cnt2 = 0; // []
+            int cnt3 = 0; // {}
             string st = Console.ReadLine();
             MyStack stck = new MyStack();
-            foreach (var elem in st)
+            bool flag = true;
+            foreach (var ele in st)
             {
-                if (elem == '(')
-                    n += 1;
+                string elem = Convert.ToString(ele);
+                if (elem == "(" || elem == "[" || elem == "{")
+                {
+                    if (elem == "(")
+                        cnt1 += 1;
+                    if (elem == "[")
+                        cnt2 += 1;
+                    if (elem == "{")
+                        cnt3 += 1;
+                }
+                
                 else
                 {
-                    if (n == 0)
-                        cnt += 1;
+                    if (cnt1 == 0 && cnt2 == 0 && cnt3 == 0)
+                    {
+                        flag = false;
+                        break;
+                    }
                     else
-                        n -= 1;
+                    {
+                        if ((cnt1 == 0 && elem == ")") || (cnt2 == 0 && elem == "]") || (cnt3 == 0 && elem == "}"))
+                        {
+                            flag = false;
+                            break;
+                        }
+                        if (elem == ")")
+                            cnt1 -= 1;
+                        if (elem == "]")
+                            cnt2 -= 1;
+                        if (elem == "}")
+                            cnt3 -= 1;
+                    }
                 }
             }
-            cnt += n;
-            Console.WriteLine(cnt);
+
+            if (cnt1 == 0 && cnt2 == 0 && cnt3 == 0 && flag)
+                Console.WriteLine($"YES");
+            else
+                Console.WriteLine($"NO");
         }
     }
     class MyStack
@@ -44,6 +74,15 @@ namespace ConsoleApp1
         {
             first = new StackItem(elem);
             size = 1;
+        }
+        public StackItem peek()
+        {
+            StackItem cur = first;
+            while (cur.next != null)
+            {
+                cur = cur.next;
+            }
+            return cur;
         }
         public void append(string st)
         {
