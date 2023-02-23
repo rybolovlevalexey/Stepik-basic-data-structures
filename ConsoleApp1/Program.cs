@@ -6,9 +6,6 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            int cnt1 = 0; // ()
-            int cnt2 = 0; // []
-            int cnt3 = 0; // {}
             string st = Console.ReadLine();
             MyStack stck = new MyStack();
             bool flag = true;
@@ -16,43 +13,30 @@ namespace ConsoleApp1
             {
                 string elem = Convert.ToString(ele);
                 if (elem == "(" || elem == "[" || elem == "{")
-                {
-                    if (elem == "(")
-                        cnt1 += 1;
-                    if (elem == "[")
-                        cnt2 += 1;
-                    if (elem == "{")
-                        cnt3 += 1;
-                }
-                
+                    stck.append(elem);
                 else
                 {
-                    if (cnt1 == 0 && cnt2 == 0 && cnt3 == 0)
+                    if (stck.Size == 0)
                     {
                         flag = false;
                         break;
                     }
                     else
                     {
-                        if ((cnt1 == 0 && elem == ")") || (cnt2 == 0 && elem == "]") || (cnt3 == 0 && elem == "}"))
+                        string last = stck.peek().value;
+                        if ((last == "(" && elem != ")") || (last == "[" && elem != "]") || (last == "{" && elem != "}"))
                         {
                             flag = false;
                             break;
                         }
-                        if (elem == ")")
-                            cnt1 -= 1;
-                        if (elem == "]")
-                            cnt2 -= 1;
-                        if (elem == "}")
-                            cnt3 -= 1;
+                        stck.pop();
                     }
                 }
             }
-
-            if (cnt1 == 0 && cnt2 == 0 && cnt3 == 0 && flag)
-                Console.WriteLine($"YES");
+            if (stck.Size == 0 && flag)
+                Console.WriteLine("YES");
             else
-                Console.WriteLine($"NO");
+                Console.WriteLine("NO");
         }
     }
     class MyStack
