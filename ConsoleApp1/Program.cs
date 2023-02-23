@@ -4,37 +4,70 @@ namespace ConsoleApp1
 {
     class Program
     {
+        class Answer
+        {
+            public int dlina = -1;
+            public string stroka = "";
+        }
         static void Main(string[] args)
         {
+            string alphabet = "zxcvbnmlkjhgfdsaqwertyuiop";
+            int k = Convert.ToInt32(Console.ReadLine());
             string st = Console.ReadLine();
-            int error = -1;
-            Stack stack = new Stack(st[0].ToString());
-            for (int i = 0; i < st.Length; i += 1)
+            Answer ans = new Answer();
+
+            foreach (var letter in alphabet)
             {
-                if (i == 0)
-                    continue;
-                string elem = st[i].ToString();
-                if (elem == "{" || elem == "(" || elem == "[")
+                int end = 0;
+                int cnt = k;
+                for (int beg = 0; beg < st.Length; beg += 1)
                 {
-                    stack.append(elem);
-                }
-                else
-                {
-                    StackItem res = stack.pop();
-                    if (res is null || (res.value == "{" && elem != "}") || (res.value == "[" && elem != "]") || (res.value == "(" && elem != ")"))
+                    if (st[beg] != letter && cnt > 0)
+                        cnt -= 1;
+                    if (beg != 0 && st[beg - 1] != letter)
+                        cnt += 1;
+
+                    while (end < st.Length)
                     {
-                        error = i + 1;
-                        break;
+                        if (end > beg)
+                        {
+                            if (st[end] == letter && cnt == 0)
+                            {
+                                int dl = end - beg + 1;
+                                if (ans.dlina == -1 || dl > ans.dlina)
+                                {
+                                    ans.dlina = dl;
+                                    ans.stroka = st[beg..(end + 1)];
+                                }
+                            }
+                            if (st[end] != letter && cnt == 0)
+                                break;
+                            if (st[end] != letter && cnt > 0)
+                            {
+                                cnt -= 1;
+                                int dl = end - beg + 1;
+                                if (ans.dlina == 0 || dl > ans.dlina)
+                                {
+                                    ans.dlina = dl;
+                                    ans.stroka = st[beg..(end + 1)];
+                                }
+                            }
+                            if (st[end] == letter && cnt > 0)
+                            {
+                                int dl = end - beg + 1;
+                                if (ans.dlina == 0 || dl > ans.dlina)
+                                {
+                                    ans.dlina = dl;
+                                    ans.stroka = st[beg..(end + 1)];
+                                }
+                            }
+                        }
+                        end += 1;
+
                     }
                 }
             }
-            if (error == -1)
-            {
-                Console.WriteLine("Success");
-            } else
-            {
-                Console.WriteLine(error);
-            }
+            Console.WriteLine(ans.dlina);
         }
     }
 }
