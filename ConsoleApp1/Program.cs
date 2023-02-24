@@ -10,8 +10,45 @@ namespace ConsoleApp1
             string st = Console.ReadLine();
             while (st != "exit")
             {
-
+                string[] deyst = st.Split();
+                if (deyst.Length > 1)
+                {
+                    switch (deyst[0])
+                    {
+                        case "push_front":
+                            deq.push_front(deyst[1]);
+                            break;
+                        case "push_back":
+                            deq.push_back(deyst[1]);
+                            break;
+                    }
+                } else
+                {
+                    switch (st)
+                    {
+                        case "pop_front":
+                            deq.pop_front();
+                            break;
+                        case "pop_back":
+                            deq.pop_back();
+                            break;
+                        case "front":
+                            deq.front();
+                            break;
+                        case "back":
+                            deq.back();
+                            break;
+                        case "size":
+                            deq.size();
+                            break;
+                        case "clear":
+                            deq.clear();
+                            break;
+                    }
+                }
+                st = Console.ReadLine();
             }
+            deq.exit();
         }
     }
 
