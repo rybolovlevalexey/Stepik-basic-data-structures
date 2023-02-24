@@ -18,6 +18,27 @@ namespace ConsoleApp1
     class Deque
     {
         DequeElem Head = null;
+        public void front()
+        {
+            if (Head is null)
+                Console.WriteLine("error");
+            else
+                Console.WriteLine(Head.value);
+        }
+        public void back()
+        {
+            if (Head is null)
+                Console.WriteLine("error");
+            else
+            {
+                DequeElem cur = Head;
+                while (cur.next != null)
+                {
+                    cur = cur.next;
+                }
+                Console.WriteLine(cur.value);
+            }
+        }
         public void pop_back()
         {
             if (Head is null)
