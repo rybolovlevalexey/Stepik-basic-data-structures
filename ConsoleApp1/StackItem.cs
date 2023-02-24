@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-/*
-namespace ConsoleApp1
+class StackItem
 {
-    class StackItem
-    {
-        public string value;
-        public StackItem next = null;
+    public string value;
+    public StackItem next = null;
 
-        public StackItem (string st)
-        {
-            value = st;
-        }
+    public StackItem(string st)
+    {
+        value = st;
     }
 }
-*/
