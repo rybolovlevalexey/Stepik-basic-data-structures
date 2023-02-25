@@ -6,178 +6,39 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Deque deq = new Deque();
-            string st = Console.ReadLine();
-            while (st != "exit")
+            int n = Convert.ToInt32(Console.ReadLine());
+            string[] st = Console.ReadLine().Split();
+            int[] sp = new int[n];
+            for (int i = 0; i < n; i++)
+                sp[i] = Convert.ToInt32(st[i]);
+            int mn = 0, mx = 0, mni = 0, mxi = 0;
+            for (int i = 0; i < n; i++)
             {
-                string[] deyst = st.Split();
-                if (deyst.Length > 1)
+                if (i == 0 || sp[i] > mx)
                 {
-                    switch (deyst[0])
-                    {
-                        case "push_front":
-                            deq.push_front(deyst[1]);
-                            break;
-                        case "push_back":
-                            deq.push_back(deyst[1]);
-                            break;
-                    }
-                } else
-                {
-                    switch (st)
-                    {
-                        case "pop_front":
-                            deq.pop_front();
-                            break;
-                        case "pop_back":
-                            deq.pop_back();
-                            break;
-                        case "front":
-                            deq.front();
-                            break;
-                        case "back":
-                            deq.back();
-                            break;
-                        case "size":
-                            deq.size();
-                            break;
-                        case "clear":
-                            deq.clear();
-                            break;
-                    }
+                    mx = sp[i];
+                    mxi = i;
                 }
-                st = Console.ReadLine();
-            }
-            deq.exit();
-        }
-    }
-
-    class Deque
-    {
-        DequeElem Head = null;
-        public void exit()
-        {
-            Console.WriteLine("bye");
-        }
-        public void clear()
-        {
-            Head = null;
-            Console.WriteLine("ok");
-        }
-        public void size()
-        {
-            if (Head is null)
-                Console.WriteLine(0);
-            else
-            {
-                if (Head.next is null)
-                    Console.WriteLine(1);
-                else
+                if (i == 0 || sp[i] < mn)
                 {
-                    DequeElem cur = Head;
-                    int cnt = 0;
-                    while (cur != null)
-                    {
-                        cnt += 1;
-                        cur = cur.next;
-                    }
-                    Console.WriteLine(cnt);
+                    mn = sp[i];
+                    mni = i;
                 }
             }
-        }
-        public void front()
-        {
-            if (Head is null)
-                Console.WriteLine("error");
-            else
-                Console.WriteLine(Head.value);
-        }
-        public void back()
-        {
-            if (Head is null)
-                Console.WriteLine("error");
-            else
+            int summa = 0, a= 0 , b = 0;
+            if (mni < mxi)
             {
-                DequeElem cur = Head;
-                while (cur.next != null)
-                {
-                    cur = cur.next;
-                }
-                Console.WriteLine(cur.value);
+                a = mni;
+                b = mxi;
             }
-        }
-        public void pop_back()
-        {
-            if (Head is null)
-                Console.WriteLine("error");
-            else
+            if (mni > mxi)
             {
-                if (Head.next == null)
-                {
-                    Console.WriteLine(Head.value);
-                    Head = null;
-                } 
-                else
-                {
-                    DequeElem cur = Head;
-                    while (cur.next.next != null)
-                    {
-                        cur = cur.next;
-                    }
-                    Console.WriteLine(cur.next.value);
-                    cur.next = null;
-                }
-                
+                a = mxi;
+                b = mni;
             }
-        }
-        public void pop_front()
-        {
-            if (Head is null)
-                Console.WriteLine("error");
-            else
-            {
-                string ans = Head.value;
-                Head = Head.next;
-                Console.WriteLine(ans);
-            }
-        }
-        public void push_back(string elem)
-        {
-            if (Head is null)
-                Head = new DequeElem(elem);
-            else
-            {
-                DequeElem cur = Head;
-                while (!(cur.next is null))
-                    cur = cur.next;
-                cur.next = new DequeElem(elem);
-            }
-            Console.WriteLine("ok");
-        }
-
-        public void push_front(string elem)
-        {
-            if (Head is null)
-                Head = new DequeElem(elem);
-            else
-            {
-                DequeElem cur = Head;
-                DequeElem new_elem = new DequeElem(elem);
-                new_elem.next = cur;
-                Head = new_elem;
-            }
-            Console.WriteLine("ok");
-        }
-    }
-
-    class DequeElem
-    {
-        public string value;
-        public DequeElem prev = null, next = null;
-
-        public DequeElem(string x)
-        {
-            value = x;
+            for (int i = a + 1; i < b; i++)
+                summa += sp[i];
+            Console.WriteLine(summa);
         }
     }
 }
