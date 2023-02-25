@@ -4,19 +4,20 @@ namespace ConsoleApp1
 {
     class Program
     {
+        public static int FindLast(int key, int[] items)
+        {
+            // реализуйте данный метод
+            for(int i = items.Length - 1; i >= 0; i -= 1)
+            {
+                if (Convert.ToInt32(items[i]) == key)
+                    return i;
+            }
+            return -1;
+        }
         static void Main(string[] args)
         {
-            int n = Convert.ToInt32(Console.ReadLine());
-            string[] st = Console.ReadLine().Split();
-            int cnt = 0;
-            for (int ind = 0; ind < n; ind++)
-            {
-                if (st[ind] == "0")
-                    cnt += 1;
-                else Console.Write($"{st[ind]} ");
-            }
-            for (int ind = 0; ind < cnt; ind += 1)
-                Console.Write("0 ");
+            int[] sp = { 6, 6, 5, 7 };
+            Console.WriteLine(FindLast(0, sp));
         }
     }
 }
