@@ -7,19 +7,16 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             int n = Convert.ToInt32(Console.ReadLine());
-            string st = Console.ReadLine();
-            while (st.Contains(" "))
-                st = st.Replace(" ", "");           
-            while (st.Contains("00"))
-                st = st.Replace("00", "0");
-            string[] stroka = st.Split("0");
-            int ans = 0;
-            foreach (var elem in stroka)
+            string[] st = Console.ReadLine().Split();
+            int cnt = 0;
+            for (int ind = 0; ind < n; ind++)
             {
-                if (elem.Length > ans)
-                    ans = elem.Length;
+                if (st[ind] == "0")
+                    cnt += 1;
+                else Console.Write($"{st[ind]} ");
             }
-            Console.WriteLine(ans);
+            for (int ind = 0; ind < cnt; ind += 1)
+                Console.Write("0 ");
         }
     }
 }
