@@ -7,23 +7,18 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            static bool IsGood(int numb)
+            static string MakeGood(string stroka)
             {
-                SortedSet<char> sp = new SortedSet<char>();
-                foreach (char elem in Convert.ToString(numb))
-                {
-                    sp.Add(elem);
-                }
-                return (sp.Count == 4);
+                if (stroka.Length <= 10)
+                    return stroka;
+                return stroka[0] + Convert.ToString(stroka.Length - 2) + stroka[stroka.Length - 1];
             }
-            int year = Convert.ToInt32(Console.ReadLine()) + 1;
-            while (true)
+            int n = Convert.ToInt32(Console.ReadLine());
+            for (int i = 0; i < n; i += 1)
             {
-                if (IsGood(year))
-                    break;
-                year += 1;
+                string st = Console.ReadLine();
+                Console.WriteLine(MakeGood(st));
             }
-            Console.WriteLine(year);
         }
     }
 }
