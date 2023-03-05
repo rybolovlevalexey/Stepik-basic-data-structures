@@ -7,18 +7,15 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            static string MakeGood(string stroka)
-            {
-                if (stroka.Length <= 10)
-                    return stroka;
-                return stroka[0] + Convert.ToString(stroka.Length - 2) + stroka[stroka.Length - 1];
-            }
             int n = Convert.ToInt32(Console.ReadLine());
-            for (int i = 0; i < n; i += 1)
+            string st = Console.ReadLine();
+            int cnt = 0;
+            while (st.Contains("xxx"))
             {
-                string st = Console.ReadLine();
-                Console.WriteLine(MakeGood(st));
+                cnt += 1;
+                st = st[0..(st.IndexOf("xxx") + 1)] + st[(st.IndexOf("xxx") + 2)..(st.Length)];
             }
+            Console.WriteLine(cnt);
         }
     }
 }
