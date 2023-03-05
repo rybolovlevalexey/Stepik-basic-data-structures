@@ -7,20 +7,23 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            static bool IsProst(int numb)
+            static bool IsGood(int numb)
             {
-                for (int d = 2; d <= numb / 2; d += 1)
+                SortedSet<char> sp = new SortedSet<char>();
+                foreach (char elem in Convert.ToString(numb))
                 {
-                    if (numb % d == 0)
-                        return false;
+                    sp.Add(elem);
                 }
-                return true;
+                return (sp.Count == 4);
             }
-            int n = Convert.ToInt32(Console.ReadLine());
-            if (IsProst(n))
-                Console.WriteLine("prime");
-            else
-                Console.WriteLine("composite");
+            int year = Convert.ToInt32(Console.ReadLine()) + 1;
+            while (true)
+            {
+                if (IsGood(year))
+                    break;
+                year += 1;
+            }
+            Console.WriteLine(year);
         }
     }
 }
