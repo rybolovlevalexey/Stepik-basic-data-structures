@@ -7,26 +7,20 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            static int Maximum(string[] numbs)
+            static bool IsProst(int numb)
             {
-                int ans = -1;
-                for (int i = 0; i < numbs.Length; i += 1)
+                for (int d = 2; d <= numb / 2; d += 1)
                 {
-                    if (i == 0)
-                        ans = Convert.ToInt32(numbs[i]);
-                    else
-                    {
-                        if (ans < Convert.ToInt32(numbs[i]))
-                            ans = Convert.ToInt32(numbs[i]);
-                    }
+                    if (numb % d == 0)
+                        return false;
                 }
-                return ans;
+                return true;
             }
             int n = Convert.ToInt32(Console.ReadLine());
-            string[] sp1 = Console.ReadLine().Split();
-            int m = Convert.ToInt32(Console.ReadLine());
-            string[] sp2 = Console.ReadLine().Split();
-            Console.WriteLine(Maximum(sp1) * Maximum(sp2));
+            if (IsProst(n))
+                Console.WriteLine("prime");
+            else
+                Console.WriteLine("composite");
         }
     }
 }
