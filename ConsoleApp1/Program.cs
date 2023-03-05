@@ -7,18 +7,26 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            static bool IsGood(string numb)
+            static int Maximum(string[] numbs)
             {
-                if (Convert.ToInt32(numb[0]) + Convert.ToInt32(numb[1]) + Convert.ToInt32(numb[2]) == Convert.ToInt32(numb[3]) + Convert.ToInt32(numb[4]) + Convert.ToInt32(numb[5]))
-                    return true;
-                return false;
+                int ans = -1;
+                for (int i = 0; i < numbs.Length; i += 1)
+                {
+                    if (i == 0)
+                        ans = Convert.ToInt32(numbs[i]);
+                    else
+                    {
+                        if (ans < Convert.ToInt32(numbs[i]))
+                            ans = Convert.ToInt32(numbs[i]);
+                    }
+                }
+                return ans;
             }
-            string x1 = (Console.ReadLine());
-            string x2 = (Console.ReadLine());
-            if (IsGood(x1) && IsGood(x2))
-                Console.WriteLine(1);
-            else
-                Console.WriteLine(-1);
+            int n = Convert.ToInt32(Console.ReadLine());
+            string[] sp1 = Console.ReadLine().Split();
+            int m = Convert.ToInt32(Console.ReadLine());
+            string[] sp2 = Console.ReadLine().Split();
+            Console.WriteLine(Maximum(sp1) * Maximum(sp2));
         }
     }
 }
