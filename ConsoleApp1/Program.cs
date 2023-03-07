@@ -7,41 +7,28 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Dictionary<string, int> letters = new Dictionary<string, int>();
-            string st = Console.ReadLine();
-            for (int i = 0; i < st.Length; i += 1)
+            Dictionary<string, string> book = new Dictionary<string, string>();
+            int n = Convert.ToInt32(Console.ReadLine());
+            for (int i = 0; i < n; i += 1)
             {
-                string elem = Convert.ToString(st[i]);
-                if (letters.ContainsKey(elem))
-                    letters[elem] += 1;
-                else
-                    letters[elem] = 1;
-            }
-            string st1 = Console.ReadLine();
-            bool flag = true;
-            for (int i = 0; i < st1.Length; i += 1)
-            {
-                string elem = Convert.ToString(st1[i]);
-                if (letters.ContainsKey(elem))
-                {
-                    if (letters[elem] == 0)
-                    {
-                        flag = false;
-                        break;
-                    }
-                    else
-                        letters[elem] -= 1;
-                }
+                string[] st = Console.ReadLine().Split();
+                if (!book.ContainsKey(st[1]))
+                    book[st[1]] = st[0];
                 else
                 {
-                    flag = false;
-                    break;
+                    st[0] = " " + st[0];
+                    book[st[1]] += st[0];
                 }
             }
-            if (flag && st.Length == st1.Length)
-                Console.WriteLine("YES");
-            else
-                Console.WriteLine("NO");
+            int m = Convert.ToInt32(Console.ReadLine());
+            for (int i = 0; i < m; i += 1)
+            {
+                string name = Console.ReadLine();
+                if (book.ContainsKey(name))
+                    Console.WriteLine(book[name]);
+                else
+                    Console.WriteLine($"Имени {name} нет в телефонной книге");
+            }
         }
     }
 }
