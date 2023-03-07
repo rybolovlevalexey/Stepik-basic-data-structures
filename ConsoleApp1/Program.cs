@@ -7,15 +7,22 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            int n = Convert.ToInt32(Console.ReadLine());
+            Dictionary<string, int> letters = new Dictionary<string, int>();
             string st = Console.ReadLine();
-            int cnt = 0;
-            while (st.Contains("xxx"))
+            for (int i = 0; i < st.Length; i += 1)
             {
-                cnt += 1;
-                st = st[0..(st.IndexOf("xxx") + 1)] + st[(st.IndexOf("xxx") + 2)..(st.Length)];
+                string elem = Convert.ToString(st[i]);
+                if (letters.ContainsKey(elem))
+                    letters[elem] += 1;
+                else
+                    letters[elem] = 1;
             }
-            Console.WriteLine(cnt);
+            List<string> keys = new List<string>(letters.Keys);
+            keys.Sort();
+            foreach(string key in keys)
+            {
+                Console.WriteLine($"{key} {letters[key]}");
+            }
         }
     }
 }
