@@ -7,27 +7,26 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Dictionary<string, string> book = new Dictionary<string, string>();
             int n = Convert.ToInt32(Console.ReadLine());
+            Dictionary<string, List<string>> classes = new Dictionary<string, List<string>>();
             for (int i = 0; i < n; i += 1)
             {
                 string[] st = Console.ReadLine().Split();
-                if (!book.ContainsKey(st[1]))
-                    book[st[1]] = st[0];
+                if (classes.ContainsKey(st[0]))
+                    classes[st[0]].Add(st[1]);
                 else
                 {
-                    st[0] = " " + st[0];
-                    book[st[1]] += st[0];
+                    classes[st[0]] = new List<string>();
+                    classes[st[0]].Add(st[1]);
                 }
             }
-            int m = Convert.ToInt32(Console.ReadLine());
-            for (int i = 0; i < m; i += 1)
+            for (int cl = 9; cl <= 11; cl += 1)
             {
-                string name = Console.ReadLine();
-                if (book.ContainsKey(name))
-                    Console.WriteLine(book[name]);
-                else
-                    Console.WriteLine($"Имени {name} нет в телефонной книге");
+                if (classes.ContainsKey(Convert.ToString(cl)))
+                {
+                    foreach (var name in classes[Convert.ToString(cl)])
+                        Console.WriteLine($"{cl} {name}");
+                }
             }
         }
     }
