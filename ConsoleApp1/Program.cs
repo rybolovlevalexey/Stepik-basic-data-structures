@@ -8,27 +8,23 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             int n = Convert.ToInt32(Console.ReadLine());
-            Dictionary<string, List<string>> persons = new Dictionary<string, List<string>>();
+            Dictionary<string, int> persons = new Dictionary<string, int>();
             for (int i = 0; i < n; i += 1)
             {
-                string[] st = Console.ReadLine().Split();
-                if (!persons.ContainsKey(st[2]))
-                    persons[st[2]] = new List<string>();
-                persons[st[2]].Add(st[0]);
-            }
-            n = Convert.ToInt32(Console.ReadLine());
-            for(int i = 0; i < n; i += 1)
-            {
-                string month = Console.ReadLine();
-                if (!persons.ContainsKey(month))
-                    Console.WriteLine("-");
-                else
+                string st = Console.ReadLine();
+                bool flag = true;
+                if (!persons.ContainsKey(st))
+                    flag = false;
+                if (!flag)
                 {
-                    foreach (var name in persons[month])
-                        Console.Write($"{name} ");
-                    Console.WriteLine();
+                    Console.WriteLine("OK");
+                    persons[st] = 1;
+                } else
+                {
+                    Console.WriteLine(st + Convert.ToString(persons[st]));
+                    persons[st] += 1;
                 }
-            }
+            }    
         }
     }
 }
