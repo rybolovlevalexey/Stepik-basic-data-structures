@@ -8,6 +8,15 @@ namespace ConsoleApp1
 		private int[] items;
 
 		private int size = 0;
+		public void InsertRange(int index, int[] array)
+		{
+			// реализуйте данный метод
+			foreach(var elem in array)
+            {
+				this.Insert(index, elem);
+				index += 1;
+            }
+		}
 		public void PushBackRange(int[] array)
 		{
 			// реализуйте данный метод
