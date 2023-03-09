@@ -8,6 +8,16 @@ namespace ConsoleApp1
 		private int[] items;
 
 		private int size = 0;
+		public int FindLast(int key)
+		{
+			// реализуйте данный метод
+			for (int i = this.GetCount() - 1; i >= 0; i += 1)
+            {
+				if (this.Get(i) == key)
+					return i;
+            }
+			return -1;
+		}
 		public void InsertRange(int index, int[] array)
 		{
 			// реализуйте данный метод
