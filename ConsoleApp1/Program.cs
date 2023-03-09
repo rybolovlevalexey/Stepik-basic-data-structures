@@ -8,6 +8,19 @@ namespace ConsoleApp1
 		private int[] items;
 
 		private int size = 0;
+		public bool Remove(int item)
+		{
+			// реализуйте данный метод
+			for (int ind = 0; ind < this.GetCount(); ind += 1)
+            {
+				if (items[ind] == item)
+                {
+					this.RemoveByIndex(ind);
+					return true;
+                }
+            }
+			return false;
+		}
 		public int RemoveAll(int item)
 		{
 			// реализуйте данный метод
