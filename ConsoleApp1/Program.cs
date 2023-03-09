@@ -8,6 +8,14 @@ namespace ConsoleApp1
 		private int[] items;
 
 		private int size = 0;
+		public void PushBackRange(int[] array)
+		{
+			// реализуйте данный метод
+			foreach (var elem in array)
+            {
+				this.PushBack(elem);
+            }
+		}
 		public bool Remove(int item)
 		{
 			// реализуйте данный метод
@@ -99,7 +107,21 @@ namespace ConsoleApp1
 		}
 
 		private void IncreaseArray()
-		{ }
+		{
+			int newCount = size * 2;
+			if (size == 0)
+			{
+				newCount = 4;
+			}
+
+			var newArray = new int[newCount];
+			for (int i = 0; i < size; i++)
+			{
+				newArray[i] = items[i];
+			}
+
+			items = newArray;
+		}
 
 		public void Insert(int index, int item)
 		{
@@ -129,13 +151,35 @@ namespace ConsoleApp1
 		}
 
 		public void PopBack()
-		{ }
+		{
+			if (size == 0)
+			{
+				throw new Exception("Массив пустой.");
+			}
+			size--;
+		}
 
 		public void RemoveByIndex(int index)
-		{ }
+		{
+			if (size == 0)
+			{
+				throw new Exception("Массив пустой!");
+			}
+			if (index < 0 || index >= size)
+			{
+				throw new Exception("Выход за пределами массива");
+			}
+			for (int i = index + 1; i < size; i++)
+			{
+				items[i - 1] = items[i];
+			}
+			size--;
+		}
 
 		public void PopFront()
-		{ }
+		{
+			RemoveByIndex(0);
+		}
 	}
 	class Program
     {
