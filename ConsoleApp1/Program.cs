@@ -5,18 +5,29 @@ namespace ConsoleApp1
 {
     class Program
     {
-        static public void Factorize(int numb)
+        static public int[] GetCubes(int start, int end)
         {
-            for (int d = 1; d <= Convert.ToInt32(Math.Sqrt(numb)); d += 1)
+            int[] ans = new int[end - start + 1];
+            int ind = 0;
+            for (int num = start; num <= end; num += 1)
             {
-                if (numb % d == 0)
-                    Console.WriteLine($"{numb} = {d} * {numb / d}");
+                ans[ind] = num * num * num;
+                ind += 1;
             }
+            return ans;
+        }
+        static public void PrintSum(int[] sp)
+        {
+            int summ = 0;
+            foreach (var elem in sp)
+                summ += elem;
+            Console.WriteLine(summ);
         }
         static void Main(string[] args)
         {
-            int value = int.Parse(Console.ReadLine());
-            Factorize(value);
+            int startValue = int.Parse(Console.ReadLine());
+            int endValue = int.Parse(Console.ReadLine());
+            PrintSum(GetCubes(startValue, endValue));
         }
     }
 }
