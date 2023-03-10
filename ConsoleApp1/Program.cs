@@ -23,11 +23,31 @@ namespace ConsoleApp1
                 summ += elem;
             Console.WriteLine(summ);
         }
+        static public List<int> GetMultiple(int start, int end)
+        {
+            List<int> ans = new List<int>();
+            for (int num = start; num <= end; num += 1)
+            {
+                if (num != 0 && num % 7 == 0)
+                    ans.Add(num);
+            }
+            return ans;
+        }
+        static public void PrintEven(List<int> sp)
+        {
+            int ind = 1;
+            foreach(var elem in sp)
+            {
+                if (ind % 2 == 0)
+                    Console.Write($"{elem} ");
+                ind += 1;
+            }
+        }
         static void Main(string[] args)
         {
             int startValue = int.Parse(Console.ReadLine());
             int endValue = int.Parse(Console.ReadLine());
-            PrintSum(GetCubes(startValue, endValue));
+            PrintEven(GetMultiple(startValue, endValue));
         }
     }
 }
