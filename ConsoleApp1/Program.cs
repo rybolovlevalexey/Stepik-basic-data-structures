@@ -7,42 +7,33 @@ namespace ConsoleApp1
     //MCMXCIV
     class Program
     {
-        public static int RomanToInt(string s)
+        public static string LongestCommonPrefix(string[] strs)
         {
-            Dictionary<string, int> symbols = new Dictionary<string, int>();
-            symbols["I"] = 1;
-            symbols["V"] = 5;
-            symbols["X"] = 10;
-            symbols["L"] = 50;
-            symbols["C"] = 100;
-            symbols["D"] = 500;
-            symbols["M"] = 1000;
-            int ans = 0;
-            int ind = 0, k1, k2;
-            
-            while (ind < s.Length)
+            string ans = strs[0];
+            for (int i = 0; i < strs.Length; i += 1)
             {
-                k1 = symbols[Convert.ToString(s[ind])];
-                if (ind + 1 < s.Length)
+                int dl = 0;
+                if (ans.Length == 0)
+                    return ans;
+                foreach (var elem in strs[i])
                 {
-                    k2 = symbols[Convert.ToString(s[ind + 1])];
-                    if (k2 > k1)
-                    {
-                        ans += (k2 - k1);
-                        ind += 1;
-                    }
+                    if (dl >= ans.Length)
+                        break;
+                    if (elem == ans[dl])
+                        dl += 1;
                     else
-                        ans += k1;
-                } else
-                    ans += k1;
-                ind += 1;
+                        break;
+                }
+                if (dl == 0)
+                    return "";
+                ans = ans[0..dl];
             }
             return ans;
         }
         static void Main(string[] args)
         {
-            string st = Console.ReadLine();
-            Console.WriteLine(RomanToInt(st));
+            string[] array = Console.ReadLine().Split();
+            Console.WriteLine(LongestCommonPrefix(array));
         }
     }
 }
