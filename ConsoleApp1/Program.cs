@@ -3,51 +3,46 @@ using System.Collections.Generic;
 
 namespace ConsoleApp1
 {
+    //1 - I, 5 - V, 10 - X, 50 - L, 100 - C, 500 - D и 1000 - M.
+    //MCMXCIV
     class Program
     {
-        static public int[] GetCubes(int start, int end)
+        public static int RomanToInt(string s)
         {
-            int[] ans = new int[end - start + 1];
-            int ind = 0;
-            for (int num = start; num <= end; num += 1)
+            Dictionary<string, int> symbols = new Dictionary<string, int>();
+            symbols["I"] = 1;
+            symbols["V"] = 5;
+            symbols["X"] = 10;
+            symbols["L"] = 50;
+            symbols["C"] = 100;
+            symbols["D"] = 500;
+            symbols["M"] = 1000;
+            int ans = 0;
+            int ind = 0, k1, k2;
+            
+            while (ind < s.Length)
             {
-                ans[ind] = num * num * num;
+                k1 = symbols[Convert.ToString(s[ind])];
+                if (ind + 1 < s.Length)
+                {
+                    k2 = symbols[Convert.ToString(s[ind + 1])];
+                    if (k2 > k1)
+                    {
+                        ans += (k2 - k1);
+                        ind += 1;
+                    }
+                    else
+                        ans += k1;
+                } else
+                    ans += k1;
                 ind += 1;
             }
             return ans;
-        }
-        static public void PrintSum(int[] sp)
-        {
-            int summ = 0;
-            foreach (var elem in sp)
-                summ += elem;
-            Console.WriteLine(summ);
-        }
-        static public List<int> GetMultiple(int start, int end)
-        {
-            List<int> ans = new List<int>();
-            for (int num = start; num <= end; num += 1)
-            {
-                if (num != 0 && num % 7 == 0)
-                    ans.Add(num);
-            }
-            return ans;
-        }
-        static public void PrintEven(List<int> sp)
-        {
-            int ind = 1;
-            foreach(var elem in sp)
-            {
-                if (ind % 2 == 0)
-                    Console.Write($"{elem} ");
-                ind += 1;
-            }
         }
         static void Main(string[] args)
         {
-            int startValue = int.Parse(Console.ReadLine());
-            int endValue = int.Parse(Console.ReadLine());
-            PrintEven(GetMultiple(startValue, endValue));
+            string st = Console.ReadLine();
+            Console.WriteLine(RomanToInt(st));
         }
     }
 }
