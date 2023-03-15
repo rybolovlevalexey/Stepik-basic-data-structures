@@ -10,29 +10,44 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             int n = Convert.ToInt32(Console.ReadLine());
-            Dictionary<string, string> words = new Dictionary<string, string>();
-            for(int i = 0; i < n; i += 1)
+            Dictionary<string, List<string>> forum = new Dictionary<string, List<string>>();
+            Dictionary<int, string> messeges = new Dictionary<int, string>();
+            int poryad_number = 1;
+            for (int i = 0; i < n; i += 1)
             {
-                string st = Console.ReadLine();
-                int ind = st.IndexOf(" ");
-                words[st[0..ind]] = st[(ind+1)..];
-            }
-            int m = Convert.ToInt32(Console.ReadLine());
-            for (int i = 0; i < m; i += 1)
-            {
-                string st = Console.ReadLine();
-                bool flag = false;
-                foreach (var key in words.Keys)
+                int num = Convert.ToInt32(Console.ReadLine());
+                if (num == 0)
                 {
-                    if (key == st)
+                    string tema = Console.ReadLine();
+                    string mesege = Console.ReadLine();
+                    forum[tema] = new List<string>();
+                    forum[tema].Add(mesege);
+                    messeges[poryad_number] = mesege;
+                    poryad_number += 1;
+                } else
+                {
+                    string mesege = Console.ReadLine();
+                    string answer = messeges[num];
+                    foreach (var key in forum.Keys)
                     {
-                        flag = true;
-                        Console.WriteLine(words[key]);
+                        if (forum[key].Contains(answer))
+                            forum[key].Add(mesege);
                     }
+                    messeges[poryad_number] = mesege;
+                    poryad_number += 1;
                 }
-                if (!flag)
-                    Console.WriteLine("Нет в словаре");
             }
+            int mx_dl = 0;
+            string ans = "";
+            foreach (var key in forum.Keys)
+            {
+                if (forum[key].Count > mx_dl)
+                {
+                    mx_dl = forum[key].Count;
+                    ans = key;
+                }
+            }
+            Console.WriteLine(ans);
         }
     }
 }
