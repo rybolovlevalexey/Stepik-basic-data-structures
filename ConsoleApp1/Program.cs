@@ -10,44 +10,31 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             int n = Convert.ToInt32(Console.ReadLine());
-            Dictionary<string, List<string>> forum = new Dictionary<string, List<string>>();
-            Dictionary<int, string> messeges = new Dictionary<int, string>();
-            int poryad_number = 1;
-            for (int i = 0; i < n; i += 1)
+            Dictionary<string, int> ocenky = new Dictionary<string, int>();
+            string[] st = Console.ReadLine().Split();
+            foreach(var elem in st)
             {
-                int num = Convert.ToInt32(Console.ReadLine());
-                if (num == 0)
+                bool flag = false;
+                foreach (var key in ocenky.Keys)
                 {
-                    string tema = Console.ReadLine();
-                    string mesege = Console.ReadLine();
-                    forum[tema] = new List<string>();
-                    forum[tema].Add(mesege);
-                    messeges[poryad_number] = mesege;
-                    poryad_number += 1;
-                } else
-                {
-                    string mesege = Console.ReadLine();
-                    string answer = messeges[num];
-                    foreach (var key in forum.Keys)
+                    if (key == elem)
                     {
-                        if (forum[key].Contains(answer))
-                            forum[key].Add(mesege);
+                        flag = true;
+                        ocenky[key] += 1;
+                        break;
                     }
-                    messeges[poryad_number] = mesege;
-                    poryad_number += 1;
                 }
+                if (!flag)
+                    ocenky[elem] = 1;
             }
-            int mx_dl = 0;
-            string ans = "";
-            foreach (var key in forum.Keys)
+            foreach (var key in ocenky.Keys)
             {
-                if (forum[key].Count > mx_dl)
+                if (ocenky[key] == n)
                 {
-                    mx_dl = forum[key].Count;
-                    ans = key;
+                    Console.WriteLine(key);
+                    break;
                 }
             }
-            Console.WriteLine(ans);
         }
     }
 }
