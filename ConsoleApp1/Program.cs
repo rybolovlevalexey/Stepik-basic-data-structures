@@ -31,6 +31,19 @@ namespace ConsoleApp1
             }
             Console.WriteLine(ans);
         }
+        public void peek()
+        {
+            if (size == 0)
+            {
+                Console.WriteLine("error");
+                return;
+            }
+            Console.WriteLine(items[0]);
+        }
+        public void count()
+        {
+            Console.WriteLine(size);
+        }
     }
     class Program
     {
