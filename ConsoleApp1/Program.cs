@@ -5,36 +5,38 @@ using System.Collections;
 
 namespace ConsoleApp1
 {
+    class Queue
+    {
+        public List<string> items;
+        private int size = 0;
+        public Queue()
+        {
+            items = new List<string>();
+            int size = 0;
+        }
+        public void enqueue(string value)
+        {
+            items.Add(value);
+            size += 1;
+            Console.WriteLine("ok");
+        }
+        public void dequeue()
+        {
+            string ans = "error";
+            if (size > 0)
+            {
+                ans = items[0];
+                size -= 1;
+                items.RemoveAt(0);
+            }
+            Console.WriteLine(ans);
+        }
+    }
     class Program
     {
-        static void Main(string[] args)
+		static void Main(string[] args)
         {
-            int n = Convert.ToInt32(Console.ReadLine());
-            Dictionary<string, int> ocenky = new Dictionary<string, int>();
-            string[] st = Console.ReadLine().Split();
-            foreach(var elem in st)
-            {
-                bool flag = false;
-                foreach (var key in ocenky.Keys)
-                {
-                    if (key == elem)
-                    {
-                        flag = true;
-                        ocenky[key] += 1;
-                        break;
-                    }
-                }
-                if (!flag)
-                    ocenky[elem] = 1;
-            }
-            foreach (var key in ocenky.Keys)
-            {
-                if (ocenky[key] == n)
-                {
-                    Console.WriteLine(key);
-                    break;
-                }
-            }
+            
         }
     }
 }
