@@ -10,30 +10,19 @@ namespace ConsoleApp1
 		static void Main(string[] args)
         {
             int n = Convert.ToInt32(Console.ReadLine());
-            LinkedList<string> first = new LinkedList<string>(Console.ReadLine().Split());
-            int m = Convert.ToInt32(Console.ReadLine());
-            LinkedList<string> second = new LinkedList<string>(Console.ReadLine().Split());
-            LinkedListNode<string> cur1 = first.First, cur2 = second.First;
-            while (cur1 != null || cur2 != null)
+            LinkedList<string> ans = new LinkedList<string>();
+            string[] st = Console.ReadLine().Split();
+            string last = "";
+            foreach(string elem in st)
             {
-                if (cur1 == null)
+                if (elem != last)
                 {
-                    Console.Write(cur2.Value + " ");
-                    cur2 = cur2.Next;
-                } else if(cur2 == null)
-                {
-                    Console.Write(cur1.Value + " ");
-                    cur1 = cur1.Next;
-                } else if (Convert.ToInt32(cur1.Value) < Convert.ToInt32(cur2.Value))
-                {
-                    Console.Write(cur1.Value + " ");
-                    cur1 = cur1.Next;
-                } else
-                {
-                    Console.Write(cur2.Value + " ");
-                    cur2 = cur2.Next;
+                    ans.AddLast(elem);
+                    last = elem;
                 }
             }
+            foreach (var elem in ans)
+                Console.Write(elem + " ");
         }
     }
 }
