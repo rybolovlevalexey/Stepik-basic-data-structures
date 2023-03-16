@@ -10,24 +10,34 @@ namespace ConsoleApp1
 		static void Main(string[] args)
         {
             int n = Convert.ToInt32(Console.ReadLine());
-            LinkedList<string> elements = new LinkedList<string>(Console.ReadLine().Split());
-            Stack<(int, int)> stack = new Stack<(int, int)>();  // tuple(value, index)
-            int[] ans = new int[elements.Count];
-            int ind = 0;
-            foreach(var elem in elements)
+            
+            Queue<int> goblins = new Queue<int>();
+            for (int i = 0; i < n; i += 1)
             {
-                int value = Convert.ToInt32(elem);
-                while (stack.Count > 0 && value > stack.Peek().Item1)
+                string st = Console.ReadLine();
+                if (st.Contains(" "))
                 {
-                    ans[stack.Peek().Item2] = value;
-                    stack.Pop();
+                    if (st.Split()[0] == "+")
+                    {
+                        goblins.Enqueue(Convert.ToInt32(st.Split()[1]));
+                    } else
+                    {
+                        List<int> a_goblins = new List<int>(goblins.ToArray());
+                        if (goblins.Count % 2 == 0)
+                        {
+                            a_goblins.Insert(goblins.Count / 2, Convert.ToInt32(st.Split()[1]));
+                        } else
+                        {
+                            a_goblins.Insert(goblins.Count / 2 + 1, Convert.ToInt32(st.Split()[1]));
+                        }
+                        goblins = new Queue<int>(a_goblins);
+                    }
+                } else
+                {
+                    int value = goblins.Dequeue();
+                    Console.WriteLine(value);
                 }
-                (int, int) tup = (value, ind);
-                stack.Push(tup);
-                ind += 1;
             }
-            foreach (var el in ans)
-                Console.Write(el + " ");
         }
     }
 }
