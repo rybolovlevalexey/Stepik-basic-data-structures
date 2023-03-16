@@ -10,25 +10,29 @@ namespace ConsoleApp1
 		static void Main(string[] args)
         {
             int n = Convert.ToInt32(Console.ReadLine());
-            LinkedList<string> apps = new LinkedList<string>();
-            for(int i = 0; i < n; i += 1)
+            LinkedList<string> first = new LinkedList<string>(Console.ReadLine().Split());
+            int m = Convert.ToInt32(Console.ReadLine());
+            LinkedList<string> second = new LinkedList<string>(Console.ReadLine().Split());
+            LinkedListNode<string> cur1 = first.First, cur2 = second.First;
+            while (cur1 != null || cur2 != null)
             {
-                string st = Console.ReadLine();
-                if (st.StartsWith("Run"))
+                if (cur1 == null)
                 {
-                    string name = st[4..];
-                    apps.AddFirst(name);
+                    Console.Write(cur2.Value + " ");
+                    cur2 = cur2.Next;
+                } else if(cur2 == null)
+                {
+                    Console.Write(cur1.Value + " ");
+                    cur1 = cur1.Next;
+                } else if (Convert.ToInt32(cur1.Value) < Convert.ToInt32(cur2.Value))
+                {
+                    Console.Write(cur1.Value + " ");
+                    cur1 = cur1.Next;
                 } else
                 {
-                    string[] deyst = st.Split("+");
-                    int ind = (deyst.Length - 1) % apps.Count + 1;
-                    LinkedListNode<string> cur = apps.First;
-                    for (int j = 0; j < ind - 1; j += 1)
-                        cur = cur.Next;
-                    apps.Remove(cur);
-                    apps.AddFirst(cur);
+                    Console.Write(cur2.Value + " ");
+                    cur2 = cur2.Next;
                 }
-                Console.WriteLine(apps.First.Value);
             }
         }
     }
