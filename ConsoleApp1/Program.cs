@@ -7,37 +7,69 @@ namespace ConsoleApp1
 {
     class Program
     {
+        static void print_info(LinkedList<int> sp, LinkedListNode<int> mid)
+        {
+            foreach (var el in sp)
+                Console.Write(el + " ");
+            if (mid != null)
+                Console.Write(mid.Value);
+            else
+                Console.Write("None");
+            Console.WriteLine();
+        }
 		static void Main(string[] args)
         {
             int n = Convert.ToInt32(Console.ReadLine());
-            
-            Queue<int> goblins = new Queue<int>();
+            LinkedList<int> goblins = new LinkedList<int>();
+            LinkedListNode<int> middle = goblins.First;
             for (int i = 0; i < n; i += 1)
             {
                 string st = Console.ReadLine();
+                
+                if (goblins.Count == 1)
+                    middle = goblins.First;
                 if (st.Contains(" "))
                 {
+                    int gob_num = Convert.ToInt32(st.Split()[1]);
                     if (st.Split()[0] == "+")
                     {
-                        goblins.Enqueue(Convert.ToInt32(st.Split()[1]));
+                        goblins.AddLast(Convert.ToInt32(st.Split()[1]));
+                        if (goblins.Count % 2 == 0)
+                            middle = middle.Next;
                     } else
                     {
-                        List<int> a_goblins = new List<int>(goblins.ToArray());
-                        if (goblins.Count % 2 == 0)
+                        if (goblins.Count == 0)
                         {
-                            a_goblins.Insert(goblins.Count / 2, Convert.ToInt32(st.Split()[1]));
-                        } else
-                        {
-                            a_goblins.Insert(goblins.Count / 2 + 1, Convert.ToInt32(st.Split()[1]));
+                            goblins.AddLast(gob_num);
+                            middle = goblins.First;
                         }
-                        goblins = new Queue<int>(a_goblins);
+                           
+                        else
+                        {
+                            if (goblins.Count % 2 == 0)
+                            {
+                                goblins.AddBefore(middle, gob_num);
+                                middle = middle.Next;
+                            }
+                            else
+                            {
+                                goblins.AddAfter(middle, gob_num);
+                                middle = middle.Next;
+                            }
+                        }
+                        
                     }
                 } else
                 {
-                    int value = goblins.Dequeue();
-                    Console.WriteLine(value);
+                    Console.WriteLine(goblins.First.Value);
+                    goblins.RemoveFirst();
+                    if (goblins.Count % 2 != 0)
+                        middle = middle.Next;
                 }
+                print_info(goblins, middle);
             }
+            foreach (var el in goblins)
+                Console.Write(el + " ");
         }
     }
 }
