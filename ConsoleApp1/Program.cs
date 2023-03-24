@@ -7,69 +7,100 @@ namespace ConsoleApp1
 {
     class Program
     {
-        static void print_info(LinkedList<int> sp, LinkedListNode<int> mid)
+        static void Main(string[] args)
         {
-            foreach (var el in sp)
-                Console.Write(el + " ");
-            if (mid != null)
-                Console.Write(mid.Value);
-            else
-                Console.Write("None");
-            Console.WriteLine();
-        }
-		static void Main(string[] args)
-        {
-            int n = Convert.ToInt32(Console.ReadLine());
-            LinkedList<int> goblins = new LinkedList<int>();
-            LinkedListNode<int> middle = goblins.First;
-            for (int i = 0; i < n; i += 1)
+            string[] info_st = Console.ReadLine().Split();
+            int n = Convert.ToInt32(info_st[0]);
+            int m = Convert.ToInt32(info_st[1]);
+            int q = Convert.ToInt32(info_st[2]);
+            Dictionary<int, List<int>> disabled = new Dictionary<int, List<int>>();
+            int[] sp_a = new int[n];
+            int get_min_ans = 0, max_val = -1, get_max_ans = 0, min_val = -1;
+            int prev_min_ans = -1, prev_min = -1, prev_max = -1, prev_max_ans = -1;
+            Stack<int> stack_get_max_ans = new Stack<int>();
+            Stack<int> stack_max = new Stack<int>();
+
+            for (int j = 0; j < n; j += 1)
+            {
+                sp_a[j] = 0;
+                disabled[j] = new List<int>();
+            }
+            for (int i = 0; i < q; i += 1)
             {
                 string st = Console.ReadLine();
-                
-                if (goblins.Count == 1)
-                    middle = goblins.First;
-                if (st.Contains(" "))
+                if (st.StartsWith("RESET"))
                 {
-                    int gob_num = Convert.ToInt32(st.Split()[1]);
-                    if (st.Split()[0] == "+")
+                    int num = Convert.ToInt32(st.Split()[1]) - 1;
+                    sp_a[num] += 1;
+                    disabled[num] = new List<int>();
+
+                    int len = disabled[num].Count;
+                    int ai = sp_a[num];
+                    int result = ai * (m - len);
+
+                    if (min_val == -1 || result < min_val)
                     {
-                        goblins.AddLast(Convert.ToInt32(st.Split()[1]));
-                        if (goblins.Count % 2 == 0)
-                            middle = middle.Next;
-                    } else
-                    {
-                        if (goblins.Count == 0)
-                        {
-                            goblins.AddLast(gob_num);
-                            middle = goblins.First;
-                        }
-                           
-                        else
-                        {
-                            if (goblins.Count % 2 == 0)
-                            {
-                                goblins.AddBefore(middle, gob_num);
-                                middle = middle.Next;
-                            }
-                            else
-                            {
-                                goblins.AddAfter(middle, gob_num);
-                                middle = middle.Next;
-                            }
-                        }
-                        
+                        prev_min_ans = get_min_ans;
+                        prev_min = min_val;
+                        get_min_ans = num;
+                        min_val = result;
                     }
-                } else
+
+                    if (result == min_val && get_min_ans > num)
+                    {
+                        prev_min_ans = get_min_ans;
+                        prev_min = min_val;
+                        get_min_ans = num;
+                    }
+
+                    if (num == get_max_ans)
+                    {
+                        get_max_ans = prev_max_ans;
+                        max_val = prev_max;
+                    }
+
+                } else if (st.StartsWith("DISABLE"))
                 {
-                    Console.WriteLine(goblins.First.Value);
-                    goblins.RemoveFirst();
-                    if (goblins.Count % 2 != 0)
-                        middle = middle.Next;
+                    string[] st1 = st.Split();
+                    int num1 = Convert.ToInt32(st1[1]) - 1, num2 = Convert.ToInt32(st1[2]) - 1;
+                    if (disabled[num1].Count == 0 || !disabled[num1].Contains(num2))
+                        disabled[num1].Add(num2);
+
+                    int len = disabled[num1].Count;
+                    int ai = sp_a[num1];
+                    int result = ai * (m - len);
+                    
+                    if (max_val == -1 || result > max_val)
+                    {
+                        prev_max_ans = get_max_ans;
+                        prev_max = max_val;
+                        get_max_ans = num1;
+                        max_val = result;
+                    }
+                    
+                    if (result == max_val && get_max_ans > num1)
+                    {
+                        prev_max_ans = get_max_ans;
+                        prev_max = max_val;
+                        get_max_ans = num1;
+                    }
+                    
+                    if (num1 == get_min_ans)
+                    {
+                        get_min_ans = prev_min_ans;
+                        min_val = prev_min;
+                    }
                 }
-                print_info(goblins, middle);
+                else if (st == "GETMAX")
+                {
+                    Console.WriteLine(get_max_ans + 1);
+                } else if (st == "GETMIN")
+                {
+                    Console.WriteLine(get_min_ans + 1);
+                }
+                //Console.WriteLine($"{get_min_ans}, {min_val}, {get_max_ans}, {max_val}");
             }
-            foreach (var el in goblins)
-                Console.Write(el + " ");
+            
         }
     }
 }
