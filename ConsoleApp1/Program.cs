@@ -9,94 +9,40 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            ListNode l1 = new ListNode(1);
-            l1.next = new ListNode(2);
-            ListNode l2 = new ListNode(1);
-            l2.next = new ListNode(3);
-            Solution sl = new Solution(l1, l2);
-
-        }
-    }
-    public class ListNode
-    {
-        public int val;
-        public ListNode next;
-        public ListNode(int val = 0, ListNode next = null)
-        {
-            this.val = val;
-            this.next = next;
-        }
-    }
-    public class Solution
-    {
-        public Solution(ListNode list1, ListNode list2)
-        {
-            Console.WriteLine(MergeTwoLists(list1, list2));
-        }
-        public ListNode MergeTwoLists(ListNode list1, ListNode list2)
-        {
-            ListNode Head = new ListNode();
-            if (list1 is null && list2 is null)
-                return null;
-            if (list1 != null && list2 != null)
+            int n = Convert.ToInt32(Console.ReadLine());
+            int[] can_doh = new int[n];
+            int[] can_obr = new int[n];
+            int[] can_chi = new int[n];
+            string[] doh = Console.ReadLine().Split();
+            string[] obr = Console.ReadLine().Split();
+            string[] chi = Console.ReadLine().Split();
+            for (int i = 0; i < n; i += 1)
             {
-                if (list1.val < list2.val)
-                {
-                    Head.val = list1.val;
-                    list1 = list1.next;
-                } else
-                {
-                    Head.val = list2.val;
-                    list2 = list2.next;
-                }
-            } else
-            {
-                if (list1 is null)
-                {
-                    Head.val = list2.val;
-                    list2 = list2.next;
-                }
-                else
-                {
-                    Head.val = list1.val;
-                    list1 = list1.next;
-                }
+                can_doh[i] = Convert.ToInt32(doh[i]);
+                can_obr[i] = Convert.ToInt32(obr[i]);
+                can_chi[i] = Convert.ToInt32(chi[i]);
             }
-
-            ListNode cur_head = Head;
-            while (list1 != null || list2 != null)
+            int q = Convert.ToInt32(Console.ReadLine());
+            string[] dohod = Console.ReadLine().Split();
+            string[] obraz = Console.ReadLine().Split();
+            string[] parents = Console.ReadLine().Split();
+            for (int i = 0; i < q; i += 1)
             {
-                if (list1 != null && list2 != null)
+                int dj = Convert.ToInt32(dohod[i]), oj = Convert.ToInt32(obraz[i]), pj = Convert.ToInt32(parents[i]);
+                int ans = 0;
+                if (pj != 0 && can_chi[pj - 1] != 0)
+                    ans = pj;
+                for (int j = 0; j < n; j += 1)
                 {
-                    if (list1.val < list2.val)
+                    if (dj >= can_doh[j] && oj >= can_obr[j])
                     {
-                        ListNode cur = new ListNode(list1.val);
-                        list1 = list1.next;
-                        cur_head.next = cur;
-                    } else
-                    {
-                        ListNode cur = new ListNode(list2.val);
-                        list2 = list2.next;
-                        cur_head.next = cur;
-                    }
-                    cur_head = cur_head.next;
-                } else
-                {
-                    if (list1 is null)
-                    {
-                        ListNode cur = new ListNode(list2.val);
-                        list2 = list2.next;
-                        cur_head.next = cur;
-                    } else
-                    {
-                        ListNode cur = new ListNode(list1.val);
-                        list1 = list1.next;
-                        cur_head.next = cur;
+                        if (ans > j + 1 || ans == 0)
+                            ans = j + 1;
+                        break;
                     }
                 }
-                
+                Console.Write($"{ans} ");
             }
-            return Head;
         }
     }
 }
