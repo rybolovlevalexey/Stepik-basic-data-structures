@@ -28,4 +28,39 @@ namespace ConsoleApp1
             Console.WriteLine(Max(new[] { "A", "B", "C" }));
         }
     }
+	public class LimitedSizeStack<T>
+	{
+		private int count = 0;
+		private int? stack_limit = null;
+		private LinkedList<T> stack_data;
+		public LimitedSizeStack(int undoLimit)
+		{
+			stack_limit = undoLimit;
+			stack_data = new LinkedList<T>();
+		}
+
+		public void Push(T item)
+		{
+			if (count == stack_limit)
+			{
+				stack_data.RemoveFirst();
+				stack_data.AddLast(item);
+			}
+			else
+			{
+				stack_data.AddLast(item);
+				count += 1;
+			}
+		}
+
+		public T Pop()
+		{
+			if (count > 0)
+			{
+				count -= 1;
+			}
+			return stack_data.Last.Value;
+		}
+		public int Count { get { return count; } }
+	}
 }
